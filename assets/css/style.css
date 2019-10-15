@@ -1,0 +1,18 @@
+body {
+    font-size: 18px;
+    text-align: center;
+    line-height: 150%;
+    margin: auto;
+}
+
+h1, h2, p {
+    margin: 20px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 24px;
+}
