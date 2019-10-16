@@ -2,6 +2,7 @@
     * Button disappears
 2. The following items appear on screen:
     * 20 second timer
+        * starts counting down immediately
     * 1 trivia question
     * List of 4 answer choices
 3. IF the player choices the correct answer:
@@ -23,3 +24,4 @@
 6. IF there are no more questions to answer:
     * The page will display the number of correct, incorrect, and unanswered questions
     * The player can click a button to play again
+    
