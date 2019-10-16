@@ -10,7 +10,7 @@ var intervalId; // to hold setInterval function
 
 var isAnswered = false;
 
-var correctAnswer; // to hold the correct answer for each individual question
+var correctAnswer; // to hold the "correct" value for each individual question
 
 var triviaIndex = 0 // to cycle through the different questions in the object of all questions/answers
 
@@ -45,7 +45,7 @@ var trivia = [{
     correct: "4"
     // put image here
 }, {
-    question: "Which of the following is NOT a Festivus tradition?"
+    question: "Which of the following is NOT a Festivus tradition?",
     answers: ["Airing of Grievances", "Traditional McDonald's Feast", "Feats of Strength", "The Alumnium Pole"],
     correct: "2"
     // put image here
@@ -56,15 +56,43 @@ var trivia = [{
 // ===========================================================
 
 function startGame() {
+    //remove start button, set values, run the gameplay function
     $("#start").remove();
     answeredRight = 0;
     answeredWrong = 0;
     unanswered = 0;
-    loadQuestions();
+    gameplay();
 }
 
-function loadQuestions() {
+function gameplay() {
+    //set countdown values
     isAnswered = false;
     timeLeft = 20;
-    intervalId
+    intervalId = setInterval(timer, 1000);
+    // run countdown if question hasn't been answered
+    if (!isAnswered) {
+        timer();
+    }
+    // correctAnswer now equals corresponding correct value in trivia object array
+    correctAnswer = trivia[triviaIndex].correct
+    // question variable is equal to correspoding question value in trivia object array
+    var question = trivia[triviaIndex].question;
+    $("#question").text(question);
+    // loop through answers array in corresponding part of trivia object array
+    for (var i = 0; i < 4; i++) {
+        var answers = trivia[triviaIndex].answers[i];
+        // append answers to answers div in html with class "answer-choice" and id i
+        $("#answers").append("<p class='answer-choice' id=" + i + ">" + answers + "</p>");
+    }
+
+    // user clicks an answer 
+    $(".answer-choice").click(function() {
+        // id variable equal to "id" attribute of clicked element
+        var id = $(this).attr("id");
+        if (id === correctAnswer) {
+            // timer stops 
+            isAnswered = true;
+
+        }
+    })
 }
