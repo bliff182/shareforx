@@ -12,7 +12,7 @@ var isAnswered = false;
 
 var correctAnswer; // to hold the "correct" value for each individual question
 
-var triviaIndex = 0 // to cycle through the different questions in the object of all questions/answers
+var triviaIndex = 0 // to cycle through the different objects in the array of all questions/answers
 
 var trivia = [{
     question: "Which of the following organizations did George NOT work for?",
