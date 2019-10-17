@@ -57,6 +57,7 @@ $(document).ready(function () {
         answeredRight = 0;
         answeredWrong = 0;
         unanswered = 0;
+        triviaIndex = 0;
         loadQuestion();
     };
 
@@ -77,20 +78,20 @@ $(document).ready(function () {
                 var possibleAnswer = trivia[triviaIndex].answers[i];
                 $("#answers").append("<button class='answer-choice' id=" + i + ">" + possibleAnswer + "</button><br>");
             }
-            $(".answer-choice").click(function () {
-                isAnswered = true;
-                var answerId = $(this).attr("id");
-                answerId = parseInt(answerId);
-                var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
-                if (answerId === correctNumber) {
-                    $("#question").text("Correct!");
-                    answeredRight++;
-                    console.log("right: " + answeredRight);
-                }
-                else {
-                    $("#question").text("NO SOUP FOR YOU! The answer was " + realAnswer + ".");
-                    answeredWrong++;
-                    console.log("wrong: " + answeredWrong);
+            $(".answer-choice").click(function() {
+                if (!isAnswered) { // only run if player hasn't answered yet; prevents players from changing answer before setTimeout executes
+                    isAnswered = true;
+                    var answerId = $(this).attr("id");
+                    answerId = parseInt(answerId);
+                    var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
+                    if (answerId === correctNumber) {
+                        $("#question").text("Correct!");
+                        answeredRight++;
+                    }
+                    else {
+                        $("#question").text("NO SOUP FOR YOU! The answer was " + realAnswer + ".");
+                        answeredWrong++;
+                    }
                 }
             })
         }
@@ -99,7 +100,6 @@ $(document).ready(function () {
     function timer() {
         if (timeLeft === 0) {
             unanswered++;
-            console.log("unanswered: " + unanswered);
             isAnswered = true;
             clearInterval(intervalId); // stops timer
             // holds value of correct answer
@@ -130,8 +130,21 @@ $(document).ready(function () {
         $("#answers").append("<p>Correct: " + answeredRight + "</p>");
         $("#answers").append("<p>Incorrect: " + answeredWrong + "</p>");
         $("#answers").append("<p>Unanswered: " + unanswered + "</p>");
+        $("#answers").append("<button id='restart'>Click Here to Play Again!</button>");
+        $("#restart").click(restart);
     };
 
+    function restart() {
+        answeredRight = 0;
+        answeredWrong = 0;
+        unanswered = 0;
+        triviaIndex = 0;
+        $("#question").empty();
+        $("#answers").empty();
+        loadQuestion();
+    };
+
+    
 
     // FUNCTION EXECUTION 
     // ==============================================================================================
