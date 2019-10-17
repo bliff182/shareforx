@@ -1,12 +1,12 @@
 $(document).ready(function () {
 
-// VARIABLE DECLARATION
-// ===========================================================
+    // VARIABLE DECLARATION
+    // ===========================================================
 
     var answeredRight = 0;
     var answeredWrong = 0;
     var unanswered = 0;
-    var timeLeft = 20;
+    var timeLeft = 10;
 
     var intervalId; // to hold setInterval function
 
@@ -54,8 +54,85 @@ $(document).ready(function () {
     }];
 
 
-// FUNCTIONS
-// ===========================================================
+    // FUNCTIONS
+    // ===========================================================
+
+    function timer() {
+        if (timeLeft === 0) {
+            unanswered++;
+            isAnswered = true;
+            clearInterval(intervalId); // stops timer
+            // holds value of correct answer
+            var correct = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
+            $("#question").text("You ran out of time! The correct answer was " + correct + ".");
+        }
+        else if (isAnswered) {
+            clearInterval(intervalId); // stops timer when user clicks an answer
+        }
+        else {
+            timeLeft--;
+            $("#time-left").text(timeLeft);
+        }
+    };
+
+    $("#start").click(gameplay);
+
+    function gameplay() {
+        $("#start").remove();
+        if (!isAnswered) {
+            timer(); // timer starts until player clicks an answer
+        }
+        answeredRight = 0;
+        answeredWrong = 0;
+        unanswered = 0;
+        timeLeft = 10;
+        isAnswered = false;
+        var question = trivia[triviaIndex].question;
+        var correctAnswer = trivia[triviaIndex].correct - 1;
+        intervalId = setInterval(timer, 1000);
+        //html to update
+        $("#time-left").text(timeLeft);
+        $("#question").text(question);
+        // $("#answers").text(trivia[triviaIndex].answers);
+        // loop through answers array in corresponding part of trivia object array
+        for (var i = 0; i < 4; i++) {
+            var answer = trivia[triviaIndex].answers[i];
+            // append answer to #answers div in html with class = .answer-choice and id = i
+            // id = i will allow us compare the chosen answer with the correct answer
+            $("#answers").append("<button class='answer-choice' id=" + i + ">" + answer + "</button><br>");
+        }
+        // user clicks an answer 
+        $(".answer-choice").click(function () {
+            isAnswered = true;
+            var answerId = $(this).attr("id");
+            answerId = parseInt(answerId)
+            var correct = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
+            if (answerId === correctAnswer) {
+                $("#question").text("Correct!");
+            }
+            else {
+                $("#question").text("NO SOUP FOR YOU! The answer was " + correct + ".");
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+    /* function countdown() {
+    timeLeft--;
+    $("#time-left").text(timeLeft);
+} */
 
     /* function startGame() {
         //remove start button, set values, run the gameplay function
@@ -98,39 +175,4 @@ $(document).ready(function () {
             }
         })
     } */
-
-    $("#start").click(gameplay);
-
-    function gameplay() {
-        $("#start").remove();
-        timer(); // timer starts
-        answeredRight = 0;
-        answeredWrong = 0;
-        unanswered = 0;
-        timeLeft = 20;
-        isAnswered = false;
-        var question = trivia[triviaIndex].question;
-        var correctAnswer = trivia[triviaIndex].correct;
-        //html to update
-        $("#time-left").text(timeLeft);
-        $("#question").text(question);
-        // $("#answers").text(trivia[triviaIndex].answers);
-        // loop through answers array in corresponding part of trivia object array
-        for (var i = 0; i < 4; i++) {
-            var answer = trivia[triviaIndex].answers[i];
-            // append answer to #answers div in html with class = .answer-choice and id = i
-            // id = i will allow us compare the chosen answer with the correct answer
-            $("#answers").append("<button class='answer-choice' id=" + i + ">" + answer + "</button><br>");
-        }
-    }
-
-    function timer() {
-        intervalId = setInterval(countdown, 1000);
-        isAnswered === false;
-    }
-
-    function countdown() {
-        timeLeft--;
-        $("#time-left").text(timeLeft);
-    }
 });
