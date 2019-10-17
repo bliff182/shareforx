@@ -7,11 +7,8 @@ $(document).ready(function () {
     var answeredWrong = 0;
     var unanswered = 0;
     var timeLeft = 11;
-
     var intervalId; // to hold setInterval function
-
     var isAnswered = false;
-
     var triviaIndex = 0 // to cycle through the different objects in the array of all questions/answers
 
     var trivia = [{
@@ -64,34 +61,39 @@ $(document).ready(function () {
     };
 
     function loadQuestion() {
-        timeLeft = 11;
-        isAnswered = false;
-        intervalId = setInterval(timer, 1000);
-        var question = trivia[triviaIndex].question;
-        var correctNumber = trivia[triviaIndex].correct - 1;
-        timer();
-        $("#time-left").text(timeLeft);
-        $("#question").text(question);
-        for (var i = 0; i < 4; i++) {
-            var possibleAnswer = trivia[triviaIndex].answers[i];
-            $("#answers").append("<button class='answer-choice' id=" + i + ">" + possibleAnswer + "</button><br>");
+        if (triviaIndex === trivia.length) {
+            endGame();
         }
-        $(".answer-choice").click(function () {
-            isAnswered = true;
-            var answerId = $(this).attr("id");
-            answerId = parseInt(answerId);
-            var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
-            if (answerId === correctNumber) {
-                $("#question").text("Correct!");
-                answeredRight++;
-                console.log("right: " + answeredRight);
+        else {
+            timeLeft = 11;
+            isAnswered = false;
+            intervalId = setInterval(timer, 1000);
+            var question = trivia[triviaIndex].question;
+            var correctNumber = trivia[triviaIndex].correct - 1;
+            timer();
+            $("#time-left").text(timeLeft);
+            $("#question").text(question);
+            for (var i = 0; i < 4; i++) {
+                var possibleAnswer = trivia[triviaIndex].answers[i];
+                $("#answers").append("<button class='answer-choice' id=" + i + ">" + possibleAnswer + "</button><br>");
             }
-            else {
-                $("#question").text("NO SOUP FOR YOU! The answer was " + realAnswer + ".");
-                answeredWrong++;
-                console.log("wrong: " + answeredWrong);
-            }
-        })
+            $(".answer-choice").click(function () {
+                isAnswered = true;
+                var answerId = $(this).attr("id");
+                answerId = parseInt(answerId);
+                var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
+                if (answerId === correctNumber) {
+                    $("#question").text("Correct!");
+                    answeredRight++;
+                    console.log("right: " + answeredRight);
+                }
+                else {
+                    $("#question").text("NO SOUP FOR YOU! The answer was " + realAnswer + ".");
+                    answeredWrong++;
+                    console.log("wrong: " + answeredWrong);
+                }
+            })
+        }
     };
 
     function timer() {
@@ -122,8 +124,12 @@ $(document).ready(function () {
     };
 
     function endGame() {
+        $("#time-left").empty();
         $("#answers").empty();
-        $("#question").text("Game ended");
+        $("#question").text("Game over! Let's see how you did!");
+        $("#answers").append("<p>Correct: " + answeredRight + "</p>");
+        $("#answers").append("<p>Incorrect: " + answeredWrong + "</p>");
+        $("#answers").append("<p>Unanswered: " + unanswered + "</p>");
     };
 
 
