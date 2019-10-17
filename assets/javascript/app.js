@@ -26,7 +26,7 @@ $(document).ready(function () {
         // put image here: 
     }, {
         question: "Finish this quote: 'I think I'm pretty much like you...'",
-        answers: ["Only succesful.", "Just with hair.", "Except not at all.", "But people enjoy my company."],
+        answers: ['"Only succesful."', '"Just with hair."', '"Except not at all."', '"But people enjoy my company."'],
         correct: "1"
         // put image here:
     }, {
@@ -67,6 +67,7 @@ $(document).ready(function () {
         }
         else if (isAnswered) {
             clearInterval(intervalId); // stops timer when user clicks an answer
+            setTimeout(nextRound, 5000);
         }
         else {
             timeLeft--;
@@ -127,13 +128,37 @@ $(document).ready(function () {
         intervalId =setInterval(timer, 1000);
         timer();
         $("#time-left").text(timeLeft);
-        $("question").text(question);
+        $("#question").text(question);
+        $("#answers").empty();
         for (var i = 0; i < 4; i++) {
             var possibleAnswer = trivia[triviaIndex].answers[i];
-            $("answers").append("<button class='answer-choice' id=" + i + ">" + possibleAnswer + "</button><br>");
+            $("#answers").append("<button class='answer-choice' id=" + i + ">" + possibleAnswer + "</button><br>");
         }
-    }
+        $(".answer-choice").click(function () {
+            isAnswered = true;
+            var answerId = $(this).attr("id");
+            answerId = parseInt(answerId);
+            var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
+            if (answerId === correctNumber) {
+                $("#question").text("Correct!");
+                answeredRight++;
+            }
+            else {
+                $("#question").text("NO SOUP FOR YOU! The answer was " + realAnswer + ".");
+                answeredWrong++;
+            }
+        })
+        
+    };
 
+    /* function loadQuestion() {
+        timeLeft = 10;
+        isAnswered = false; 
+        var question = trivia[triviaIndex].question;
+        var correctNumber = trivia[triviaIndex].correct -1;
+        intervalId = setInterval(timer, 1000);
+        $("#time-left")
+    }; */
 
 // GAMEPLAY
 // ==============================================================================================
