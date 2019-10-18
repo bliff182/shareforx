@@ -39,7 +39,7 @@ $(document).ready(function () {
         correct: "2",
         image: "assets/images/big-race.gif"
     }, {
-        question: "Who is the first to drop out of 'The Contest'?",
+        question: "Who is the first to drop out of 'The Contest'",
         answers: ["Jerry", "George", "Elaine", "Kramer"],
         correct: "4",
         image: "assets/images/kramers-out.gif"
