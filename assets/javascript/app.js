@@ -63,8 +63,7 @@ $(document).ready(function () {
         answers: ["Being a 'low-talker'", "Being a 'close-talker'", "Having 'man hands'", "Beating him at chess"],
         correct: "3",
         image: "assets/images/manhands.gif"
-    }
-];
+    }];
 
 
     // FUNCTIONS
