@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     // VARIABLE DECLARATION
     // ==============================================================================================
@@ -9,43 +9,43 @@ $(document).ready(function () {
     var timeLeft = 11;
     var intervalId; // to hold setInterval function
     var isAnswered = false;
-    var triviaIndex = 0 // to cycle through the different objects in the array of all questions/answers
+    var triviaIndex = 0; // to cycle through the different objects in the array of all questions/answers
 
     var trivia = [{
-        question: "Which of the following organizations did George NOT work for?",
-        answers: ["Play Now", "The New York Yankees", "The New York Mets", "Kruger Industrial Smoothing"],
-        correct: "3"
-        // put image here: 
+        question: "George's longest-tenured job on the show was for what organization?",
+        answers: ["Play Now", "Pendant Publishing", "The New York Yankees", "Kruger Industrial Smoothing"],
+        correct: "3",
+        image: "assets/images/george-yankees.gif"
     }, {
         question: "Which of Kramer's many friends wishes for him to 'drop dead'?",
         answers: ["Lomez", "Bob Sacamano", "Jay Riemenschneider", "Franklin Delano Romanowski"],
-        correct: "4"
-        // put image here: 
+        correct: "4",
+        image: "assets/images/fdr.gif"
     }, {
-        question: "Finish this quote: 'I think I'm pretty much like you...'",
-        answers: ['"Only successful."', '"Just with hair."', '"Except not at all."', '"But people enjoy my company."'],
-        correct: "1"
-        // put image here:
+        question: "Who was Elaine's longest-running boyfriend on the show?",
+        answers: ["David Puddy", "Jerry", "Jake Jarmel", "Tim Whatley"],
+        correct: "1",
+        image: "assets/images/puddy.gif"
     }, {
         question: "Which of the main foursome is not in the pilot episode?",
         answers: ["Jerry", "George", "Elaine", "Kramer"],
-        correct: "3"
-        // put image here: 
+        correct: "3",
+        image: "assets/images/elaine-dance.gif"
     }, {
         question: "Who is Jerry's opponent in 'The Big Race'?",
         answers: ["Newman", "Duncan Meyer", "Bob Cobb", "Kenny Bania"],
-        correct: "2"
-        // put image here
+        correct: "2",
+        image: "assets/images/big-race.gif"
     }, {
-        question: "Who causes Elaine to lose 'The Contest'?",
-        answers: ["Jon Voight", "Saddam Hussein", "Keith Hernandez", "John F. Kennedy Jr."],
-        correct: "4"
-        // put image here
+        question: "Who is the first to drop out of 'The Contest'?",
+        answers: ["Jerry", "George", "Elaine", "Kramer"],
+        correct: "4",
+        image: "assets/images/kramers-out.gif"
     }, {
         question: "Which of the following is NOT a Festivus tradition?",
         answers: ["Airing of Grievances", "Traditional McDonald's Feast", "Feats of Strength", "The Alumnium Pole"],
-        correct: "2"
-        // put image here
+        correct: "2",
+        image: "assets/images/festivus.gif"
     }];
 
 
@@ -105,11 +105,13 @@ $(document).ready(function () {
             // holds value of correct answer
             var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
             $("#question").text("You ran out of time! The correct answer was " + realAnswer + ".");
-            setTimeout(nextRound, 5000);
+            $("#answers").append("<img src=" + trivia[triviaIndex].image + " />");
+            setTimeout(nextRound, 6000);
         }
         else if (isAnswered) {
             clearInterval(intervalId); // stops timer when user clicks an answer
-            setTimeout(nextRound, 5000);
+            $("#answers").append("<img src=" + trivia[triviaIndex].image + " />");
+            setTimeout(nextRound, 6000);
         }
         else {
             timeLeft--;
@@ -130,7 +132,9 @@ $(document).ready(function () {
         $("#answers").append("<p>Correct: " + answeredRight + "</p>");
         $("#answers").append("<p>Incorrect: " + answeredWrong + "</p>");
         $("#answers").append("<p>Unanswered: " + unanswered + "</p>");
-        $("#answers").append("<button id='restart'>Click Here to Play Again!</button>");
+        $("#answers").append("<button id='restart'>Click Here to Play Again!</button><br>");
+        $("#answers").append("<img src='assets/images/seinfeld-yay.gif' />");
+
         $("#restart").click(restart);
     };
 
@@ -143,8 +147,6 @@ $(document).ready(function () {
         $("#answers").empty();
         loadQuestion();
     };
-
-    
 
     // FUNCTION EXECUTION 
     // ==============================================================================================
