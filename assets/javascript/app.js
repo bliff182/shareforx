@@ -2,7 +2,8 @@ $(document).ready(function () {
 
     // VARIABLE DECLARATION
     // ==============================================================================================
-    var audio = new Audio("assets/javascript/seinfeld-theme.mp3");
+
+    var themeSong = new Audio("assets/javascript/seinfeld-theme.mp3"); // NOT WORKING
 
     var answeredRight = 0;
     var answeredWrong = 0;
@@ -47,7 +48,23 @@ $(document).ready(function () {
         answers: ["Airing of Grievances", "Big Mac Feast", "Feats of Strength", "The Alumnium Pole"],
         correct: "2",
         image: "assets/images/festivus.gif"
-    }];
+    }, {
+        question: "During Kramer's brief stay in Los Angeles, what actor does he attempt to give his script to during a chance encounter?",
+        answers: ["Fred Savage", "Macaulay Culkin", "Corey Feldman", "Edward Furlong"],
+        correct: "1",
+        image: "assets/images/kramer-fred-savage.gif"
+    }, {
+        question: "Before being fired, Kramer was going to have a speaking role in a movie starring which actor?",
+        answers: ["Robert De Niro", "Woody Allen", "Jon Voight", "Dustin Hoffman"],
+        correct: "2",
+        image: "assets/images/pretzels.gif"
+    }, {
+        question: "Which of the following is a reason Jerry has broken up with someone?",
+        answers: ["Being a 'low-talker'", "Being a 'close-talker'", "Having 'man hands'", "Beating him at chess"],
+        correct: "3",
+        image: "assets/images/manhands.gif"
+    }
+];
 
 
     // FUNCTIONS
@@ -60,6 +77,7 @@ $(document).ready(function () {
         unanswered = 0;
         triviaIndex = 0;
         loadQuestion();
+        themeSong.pause();
     };
 
     function loadQuestion() {
@@ -73,7 +91,7 @@ $(document).ready(function () {
             var question = trivia[triviaIndex].question;
             var correctNumber = trivia[triviaIndex].correct - 1;
             timer();
-            $("#time-left").text(timeLeft);
+            $("#time-left").text("Time remaining: " + timeLeft);
             $("#question").text(question);
             for (var i = 0; i < 4; i++) {
                 var possibleAnswer = trivia[triviaIndex].answers[i];
@@ -86,7 +104,7 @@ $(document).ready(function () {
                     answerId = parseInt(answerId);
                     var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
                     if (answerId === correctNumber) {
-                        $("#question").text("Correct!");
+                        $("#question").text("Giddyup! You got it right!");
                         answeredRight++;
                     }
                     else {
@@ -101,6 +119,7 @@ $(document).ready(function () {
     function timer() {
         if (timeLeft === 0) {
             unanswered++;
+            // answeredWrong++;
             isAnswered = true;
             clearInterval(intervalId); // stops timer
             // holds value of correct answer
@@ -118,7 +137,7 @@ $(document).ready(function () {
         }
         else {
             timeLeft--;
-            $("#time-left").text(timeLeft);
+            $("#time-left").text("Time remaining: " + timeLeft);
         }
     };
 
@@ -131,13 +150,12 @@ $(document).ready(function () {
     function endGame() {
         $("#time-left").empty();
         $("#answers").empty();
-        // $("#question").text("Game over! Let's see how you did!");
         $("#question").empty();
         $("#answers").append("<p class='final-score'>Correct: " + answeredRight + "</p>");
         $("#answers").append("<p class='final-score'>Incorrect: " + answeredWrong + "</p>");
         $("#answers").append("<p class='final-score'>Unanswered: " + unanswered + "</p>");
         $("#answers").append("<button id='restart'>Click Here to Play Again!</button><br>");
-        $("#answers").append("<img src='assets/images/seinfeld-yay.gif' />");
+        $("#answers").append("<img id='gif' src='assets/images/dancing.gif' />");
 
         $("#restart").click(restart);
     };
@@ -154,9 +172,11 @@ $(document).ready(function () {
 
     // FUNCTION EXECUTION 
     // ==============================================================================================
+
+    // AUDIO NOT WORKING
     // $("audio").get(0).play();
 
-    audio.play();
+    themeSong.play();
 
     $("#start").click(startGame);
 
