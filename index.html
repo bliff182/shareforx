@@ -8,20 +8,27 @@
 
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Trochut:400i&display=swap" rel="stylesheet">
 
     <title>Seinfeld Trivia!</title>
 </head>
 
 <body>
     <header>
-        <h1>Seinfeld Trivia!</h1>
+        <img id="logo" src="assets/images/logo.png" alt="Seinfeld Logo"/>
+        <h1>Trivia!</h1>
     </header>
 
-    <div class="gameplay">
-        <h2 id="question">(question h2 placeholder)</h2>
-        <p id="time-left">(time remaining p placeholder)</p>
+    <audio src="assets/javascript/seinfeld-theme.mp3" autoplay="autoplay"></audio>
+
+    <div class="game">
+        <h2 id="question">
+            <p>How well do you know Seinfeld?</p> 
+            <p>Click the button to find out!</p>
+        </h2>
+        <p id="time-left"></p>
         <div id="answers"></div>
-        <button id="start">Click to Start!</button>
+        <button class="new-game" id="start">Click to Start!</button>
 
     </div>
 

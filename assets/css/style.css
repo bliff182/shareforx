@@ -1,18 +1,72 @@
+html {
+    background-image: url("../images/seinfeld-apt.jpg");
+    background-size: cover;
+    height: 120%;
+}
+
 body {
+    /* background-image: url("../images/seinfeld-apt.jpg"); */
     font-size: 18px;
     text-align: center;
     line-height: 150%;
     margin: auto;
 }
+header {
+    position: relative;
+    display: inline-block;
+}
 
-h1, h2, p {
-    margin: 20px;
+#logo {
+    width: 400px;
+    margin-bottom: 0;
 }
 
 h1 {
-    font-size: 40px;
+    font-family: 'Trochut', cursive;
+    font-size: 80px;
+    color: #e4031c;
+    text-shadow: 1px 2px #231e0d;
+    position: absolute;
+    right: 5px;
+    bottom: -20px;
+    /* margin-top: 0; */
+    /* margin-left: 200px; */
 }
 
-h2, button {
+h2 {
+    font-size: 30px;
+    margin: 20px;
+    line-height: 150%;
+}
+
+#time-left {
+    margin: 20px;
+}
+
+button {
+    font-size: 30px;
+    margin: 5px;
+}
+
+.game {
+    margin: auto;
+    width: 960px;
+    height: 420px;
+    background-color: #fcd81b;
+    border: 3px solid #231e0d;
+    margin-top: 80px;
+    padding: 20px;
+}
+
+#gif {
+    border: 2px solid #231e0d;
+    max-height: 250px;
+}
+
+.final-score {
     font-size: 24px;
+}
+
+#restart {
+    margin-bottom: 20px;
 }

@@ -1,7 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     // VARIABLE DECLARATION
     // ==============================================================================================
+    var audio = new Audio("assets/javascript/seinfeld-theme.mp3");
 
     var answeredRight = 0;
     var answeredWrong = 0;
@@ -30,7 +31,7 @@ $(document).ready(function() {
         question: "Which of the main foursome is not in the pilot episode?",
         answers: ["Jerry", "George", "Elaine", "Kramer"],
         correct: "3",
-        image: "assets/images/elaine-dance.gif"
+        image: "assets/images/elaine-hates-it.gif"
     }, {
         question: "Who is Jerry's opponent in 'The Big Race'?",
         answers: ["Newman", "Duncan Meyer", "Bob Cobb", "Kenny Bania"],
@@ -43,7 +44,7 @@ $(document).ready(function() {
         image: "assets/images/kramers-out.gif"
     }, {
         question: "Which of the following is NOT a Festivus tradition?",
-        answers: ["Airing of Grievances", "Traditional McDonald's Feast", "Feats of Strength", "The Alumnium Pole"],
+        answers: ["Airing of Grievances", "Big Mac Feast", "Feats of Strength", "The Alumnium Pole"],
         correct: "2",
         image: "assets/images/festivus.gif"
     }];
@@ -78,7 +79,7 @@ $(document).ready(function() {
                 var possibleAnswer = trivia[triviaIndex].answers[i];
                 $("#answers").append("<button class='answer-choice' id=" + i + ">" + possibleAnswer + "</button><br>");
             }
-            $(".answer-choice").click(function() {
+            $(".answer-choice").click(function () {
                 if (!isAnswered) { // only run if player hasn't answered yet; prevents players from changing answer before setTimeout executes
                     isAnswered = true;
                     var answerId = $(this).attr("id");
@@ -105,13 +106,15 @@ $(document).ready(function() {
             // holds value of correct answer
             var realAnswer = trivia[triviaIndex].answers[trivia[triviaIndex].correct - 1];
             $("#question").text("You ran out of time! The correct answer was " + realAnswer + ".");
-            $("#answers").append("<img src=" + trivia[triviaIndex].image + " />");
-            setTimeout(nextRound, 6000);
+            $("#answers").empty();
+            $("#answers").append("<img id='gif' src=" + trivia[triviaIndex].image + " />");
+            setTimeout(nextRound, 5000);
         }
         else if (isAnswered) {
             clearInterval(intervalId); // stops timer when user clicks an answer
-            $("#answers").append("<img src=" + trivia[triviaIndex].image + " />");
-            setTimeout(nextRound, 6000);
+            $("#answers").empty();
+            $("#answers").append("<img id='gif' src=" + trivia[triviaIndex].image + " />");
+            setTimeout(nextRound, 5000);
         }
         else {
             timeLeft--;
@@ -128,10 +131,11 @@ $(document).ready(function() {
     function endGame() {
         $("#time-left").empty();
         $("#answers").empty();
-        $("#question").text("Game over! Let's see how you did!");
-        $("#answers").append("<p>Correct: " + answeredRight + "</p>");
-        $("#answers").append("<p>Incorrect: " + answeredWrong + "</p>");
-        $("#answers").append("<p>Unanswered: " + unanswered + "</p>");
+        // $("#question").text("Game over! Let's see how you did!");
+        $("#question").empty();
+        $("#answers").append("<p class='final-score'>Correct: " + answeredRight + "</p>");
+        $("#answers").append("<p class='final-score'>Incorrect: " + answeredWrong + "</p>");
+        $("#answers").append("<p class='final-score'>Unanswered: " + unanswered + "</p>");
         $("#answers").append("<button id='restart'>Click Here to Play Again!</button><br>");
         $("#answers").append("<img src='assets/images/seinfeld-yay.gif' />");
 
@@ -150,6 +154,9 @@ $(document).ready(function() {
 
     // FUNCTION EXECUTION 
     // ==============================================================================================
+    // $("audio").get(0).play();
+
+    audio.play();
 
     $("#start").click(startGame);
 
